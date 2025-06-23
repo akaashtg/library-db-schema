@@ -26,63 +26,6 @@ This system manages books, authors, library members, staff, and book loans.
 
 ---
 
-## ✅ 3. SQL Table Creation with Primary and Foreign Keys
-
-```sql
--- Authors table
-CREATE TABLE Authors (
-    AuthorID INT PRIMARY KEY,
-    Name VARCHAR(100) NOT NULL
-);
-
--- Books table
-CREATE TABLE Books (
-    BookID INT PRIMARY KEY,
-    Title VARCHAR(150) NOT NULL,
-    ISBN VARCHAR(13) UNIQUE,
-    PublicationYear INT,
-    CopiesAvailable INT
-);
-
--- BookAuthors table (junction table for many-to-many)
-CREATE TABLE BookAuthors (
-    BookID INT,
-    AuthorID INT,
-    PRIMARY KEY (BookID, AuthorID),
-    FOREIGN KEY (BookID) REFERENCES Books(BookID),
-    FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
-);
-
--- Members table
-CREATE TABLE Members (
-    MemberID INT PRIMARY KEY,
-    Name VARCHAR(100),
-    Email VARCHAR(100),
-    JoinDate DATE
-);
-
--- Staff table
-CREATE TABLE Staff (
-    StaffID INT PRIMARY KEY,
-    Name VARCHAR(100),
-    Role VARCHAR(50)
-);
-
--- Loans table
-CREATE TABLE Loans (
-    LoanID INT PRIMARY KEY,
-    BookID INT,
-    MemberID INT,
-    StaffID INT,
-    LoanDate DATE,
-    ReturnDate DATE,
-    FOREIGN KEY (BookID) REFERENCES Books(BookID),
-    FOREIGN KEY (MemberID) REFERENCES Members(MemberID),
-    FOREIGN KEY (StaffID) REFERENCES Staff(StaffID)
-);
-```
-
----
 
 ## ✅ 4. Sample Data Insertion
 
@@ -114,25 +57,7 @@ INSERT INTO Loans VALUES (402, 102, 202, 302, '2024-06-02', NULL);
 
 ---
 
-## ✅ 5. ER Diagram (Text Format)
 
-```
-[Authors]         [Books]           [Members]         [Staff]
-  AuthorID ───────┐    │                  │                 │
-     Name       └─>[BookAuthors]<─────┐ │                 │
-                            BookID └─┐ │                 │
-                            AuthorID   │                 │
-                                        ▼
-                                     [Loans]
-                                 LoanID (PK)
-                                 BookID (FK)
-                                 MemberID (FK)
-                                 StaffID (FK)
-                                 LoanDate
-                                 ReturnDate
-```
-
----
 
 ## ✅ 6. Table Format Overview
 
@@ -190,3 +115,5 @@ INSERT INTO Loans VALUES (402, 102, 202, 302, '2024-06-02', NULL);
 | **CREATE TABLE** | SQL command to define a new table.                            |
 | **Primary Key**  | Unique identifier for a record in a table.                    |
 | **Foreign Key**  | A field that links one table to another.                      |
+
+
